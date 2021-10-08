@@ -15,6 +15,8 @@ public class Database extends SQLiteOpenHelper {
     private String tableName;
     private String columnNameWithDataType;
 
+    protected SQLiteDatabase database;
+
     Database(Context context, String dbName, int dbVersion, String tableName, String columnNameWithDataType){
         super(context,dbName,null,dbVersion);
         this.context = context;
