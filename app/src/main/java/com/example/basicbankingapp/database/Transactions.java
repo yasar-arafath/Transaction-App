@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
-import com.example.basicbankingapp.banking.Customer;
 import com.example.basicbankingapp.banking.Transaction;
 
 import java.util.ArrayList;

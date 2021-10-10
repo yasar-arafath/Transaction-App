@@ -46,4 +46,6 @@ public class Customer {
     public String getAddress() {
         return address;
     }
+
+    //TODO: Count 10 customers
 }
