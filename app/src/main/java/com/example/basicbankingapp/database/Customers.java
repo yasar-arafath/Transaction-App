@@ -25,7 +25,7 @@ public class Customers extends Database{
 
     private static String columnNameWithDataType = accID + " INTEGER primary key, " + name + " TEXT, " + dob + " INTEGER, " + email + " TEXT, " + mobNum + " INTEGER, " + balance + " REAL, " + address + " TEXT";
 
-    Customers(Context context) {
+    public Customers(Context context) {
         super(context, dbName, dbVersion, tableName, columnNameWithDataType);
     }
 
@@ -55,6 +55,15 @@ public class Customers extends Database{
     public Customer detailOfCustomer(long customerID){
         try(Cursor cursor = database.rawQuery("select * from " + tableName + " where " + accID + " = " + customerID + ";",null)){
             return new Customer(cursor.getLong(0), cursor.getString(1), cursor.getLong(2), cursor.getString(3), cursor.getLong(4), cursor.getDouble(5), cursor.getString(6));
+        }
+    }
+
+    public void updateBalance(long accID,double newBalance){
+        try{
+            database = getWritableDatabase();
+            database.execSQL("update " + tableName + " set " + balance + "=" + newBalance + " where " + Customers.accID + "=" + accID);
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

@@ -24,7 +24,7 @@ public class Transactions extends Database{
 
     private static String columnNameWithDataType = transactionId + " INTEGER primary key, " + senderAcc + " INTEGER, " + receiverAcc + " INTEGER, " + time + " INTEGER unique, " + amount + " REAL";
 
-    Transactions(Context context) {
+    public Transactions(Context context) {
         super(context, dbName, dbVersion, tableName, columnNameWithDataType);
     }
 
