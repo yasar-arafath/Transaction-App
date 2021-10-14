@@ -1,5 +1,7 @@
 package com.example.basicbankingapp.logic;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -14,15 +16,18 @@ import java.util.List;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
 
-    private List<Fragment> fragmentList = new ArrayList<Fragment>(){
-        {
-            add(new CustomerFragment());
-            add(new TransactionFragment());
-        }
-    };
+    private List<Fragment> fragmentList;
+    private Context context;
 
-    public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+    public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, Context context) {
         super(fragmentActivity);
+        this.context = context;
+        fragmentList = new ArrayList<Fragment>(){
+            {
+                add(new CustomerFragment(context));
+                add(new TransactionFragment());
+            }
+        };
     }
 
     @NonNull

@@ -10,6 +10,7 @@
         <entry key="..\:/Work/AndroidStudioProjects/BasicBankingApp/app/src/main/res/drawable/ic_customers.xml" value="0.22037037037037038" />
         <entry key="..\:/Work/AndroidStudioProjects/BasicBankingApp/app/src/main/res/drawable/ic_transaction_enabled.xml" value="0.22037037037037038" />
         <entry key="..\:/Work/AndroidStudioProjects/BasicBankingApp/app/src/main/res/drawable/ic_transactions.xml" value="0.22037037037037038" />
+        <entry key="..\:/Work/AndroidStudioProjects/BasicBankingApp/app/src/main/res/layout/activity_customer_list.xml" value="0.27447916666666666" />
         <entry key="..\:/Work/AndroidStudioProjects/BasicBankingApp/app/src/main/res/layout/activity_main.xml" value="0.2617753623188406" />
         <entry key="..\:/Work/AndroidStudioProjects/BasicBankingApp/app/src/main/res/layout/fragment_customer.xml" value="0.2604166666666667" />
         <entry key="..\:/Work/AndroidStudioProjects/BasicBankingApp/app/src/main/res/layout/fragment_transaction.xml" value="0.27447916666666666" />

@@ -12,6 +12,7 @@
 <!--    UI colors-->
     <color name="ui_normal">#CCFFDD</color>
     <color name="ui_dark">#00521B</color>
+    <color name="list_item_bg">#4CAA6B</color>
 
 <!--    Customised colors-->
     <color name="base_theme1">@color/ui_normal</color>

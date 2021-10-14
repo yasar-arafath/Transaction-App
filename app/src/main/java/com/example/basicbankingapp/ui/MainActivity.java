@@ -11,9 +11,11 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 import com.example.basicbankingapp.R;
+import com.example.basicbankingapp.database.Customers;
 import com.example.basicbankingapp.databinding.ActivityMainBinding;
 import com.example.basicbankingapp.logic.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding mainBinding;
     private TabLayout tabLayout;
-    private ViewPager2 viewPager2;
+    private ViewPager2 mainScreen;
     private ViewPagerAdapter viewPagerAdapter;
     private Toolbar toolbar;
     private ConstraintLayout welcomeScreen;
@@ -37,21 +39,17 @@ public class MainActivity extends AppCompatActivity {
         mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mainBinding.getRoot());
         tabLayout = mainBinding.tabs;
-        viewPager2 = mainBinding.mainScreen;
-        viewPagerAdapter = new ViewPagerAdapter(this);
+        mainScreen = mainBinding.mainScreen;
+        viewPagerAdapter = new ViewPagerAdapter(this,this);
         toolbar = mainBinding.appName;
         welcomeScreen = mainBinding.intro;
         initialize();
     }
 
     public void initialize(){
-//        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_customers).setText("CUSTOMERS"), 0, false);
-//        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_transactions).setText("TRANSACTIONS"), 1, false);
-//        Objects.requireNonNull(Objects.requireNonNull(tabLayout.getTabAt(0)).getIcon()).setColorFilter(new PorterDuffColorFilter(getColor(R.color.base_theme1), PorterDuff.Mode.SRC_IN));
-//        Objects.requireNonNull(Objects.requireNonNull(tabLayout.getTabAt(1)).getIcon()).setColorFilter(new PorterDuffColorFilter(getColor(R.color.base_theme1), PorterDuff.Mode.SRC_IN));
-
-        viewPager2.setAdapter(viewPagerAdapter);
-        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
+        Customers.updateDBIfDefaultNotFound(this);
+        mainScreen.setAdapter(viewPagerAdapter);
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, mainScreen, (tab, position) -> {
             if(position==0){
                 tab.setIcon(R.drawable.ic_customers).setText("CUSTOMERS");
             } else {
@@ -61,8 +59,18 @@ public class MainActivity extends AppCompatActivity {
         tabLayoutMediator.attach();
 
         setSupportActionBar(toolbar);
-        viewPager2.setVisibility(View.GONE);
+        mainScreen.setVisibility(View.GONE);
         tabLayout.setVisibility(View.GONE);
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mainScreen.setVisibility(View.VISIBLE);
+                tabLayout.setVisibility(View.VISIBLE);
+                welcomeScreen.animate().scaleX(0).scaleY(0).setDuration(100).start();
+            }
+        };
+        handler.postDelayed(runnable,2000);
 
     }
 

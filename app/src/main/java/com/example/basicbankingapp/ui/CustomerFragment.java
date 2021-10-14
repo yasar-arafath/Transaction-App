@@ -1,14 +1,25 @@
 package com.example.basicbankingapp.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.example.basicbankingapp.R;
+import com.example.basicbankingapp.banking.Customer;
+import com.example.basicbankingapp.database.Customers;
+import com.example.basicbankingapp.logic.CustomerAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,12 +33,15 @@ public class CustomerFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private Context context;
+    private ListView listOfCustomers;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public CustomerFragment() {
-        // Required empty public constructor
+    public CustomerFragment(Context context) {
+        this.context = context;
     }
 
     /**
@@ -39,8 +53,8 @@ public class CustomerFragment extends Fragment {
      * @return A new instance of fragment CustomerFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CustomerFragment newInstance(String param1, String param2) {
-        CustomerFragment fragment = new CustomerFragment();
+    public static CustomerFragment newInstance(String param1, String param2, Context context) {
+        CustomerFragment fragment = new CustomerFragment(context);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,4 +77,24 @@ public class CustomerFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_customer, container, false);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initialise();
+    }
+
+    private void initialise(){
+        listOfCustomers = (ListView) this.requireView().findViewById(R.id.listOfCustomers);
+        updateCustomerList();
+    }
+
+    private void updateCustomerList(){
+        Customers customers = new Customers(context);
+        List<Customer> allCustomers = customers.allCustomers();
+
+        CustomerAdapter listAdapter = new CustomerAdapter(context, R.layout.activity_customer_list,allCustomers);
+        listOfCustomers.setAdapter(listAdapter);
+    }
+
 }

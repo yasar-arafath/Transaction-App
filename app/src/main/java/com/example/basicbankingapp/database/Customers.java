@@ -2,6 +2,7 @@ package com.example.basicbankingapp.database;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.basicbankingapp.banking.Customer;
@@ -42,12 +43,14 @@ public class Customers extends Database{
     }
 
     public List<Customer> allCustomers(){
+        database = getReadableDatabase();
         try (Cursor cursor = database.rawQuery("select * from " + tableName + ";", null)) {
             List<Customer> customersList = new ArrayList<>();
             while (cursor.moveToNext()) {
                 customersList.add(new Customer(cursor.getLong(0), cursor.getString(1), cursor.getLong(2), cursor.getString(3), cursor.getLong(4), cursor.getDouble(5), cursor.getString(6)));
                 Log.e("t", cursor.getLong(2) + "  " + cursor.getDouble(3) + "");
             }
+            Log.e("xyz",customersList.toString());
             return customersList;
         }
     }
@@ -66,4 +69,34 @@ public class Customers extends Database{
             e.printStackTrace();
         }
     }
+
+    public static long count(Context context){
+        long count = 0;
+        try{
+            Customers customers = new Customers(context);
+            SQLiteDatabase database = customers.getReadableDatabase();
+            try (Cursor cursor = database.rawQuery("select count(*) from " + tableName + ";", null)) {
+                cursor.moveToFirst();
+                count= cursor.getLong(0);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public static void updateDBIfDefaultNotFound(Context context){
+        try {
+            long count = count(context);
+            Customers customers = new Customers(context);
+            if (count != 10){
+                for (Customer customer: Customer.getDefaultCustomerList()){
+                    customers.save(customer);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }

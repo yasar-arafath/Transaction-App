@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BasicBankingApp">
         <activity
+            android:name=".ui.CustomerList"
+            android:exported="false" />
+        <activity
             android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
