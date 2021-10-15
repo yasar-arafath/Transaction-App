@@ -25,7 +25,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
         fragmentList = new ArrayList<Fragment>(){
             {
                 add(new CustomerFragment(context));
-                add(new TransactionFragment());
+                add(new TransactionFragment(context));
             }
         };
     }

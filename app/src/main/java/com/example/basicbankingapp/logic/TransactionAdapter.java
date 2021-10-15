@@ -12,21 +12,21 @@ import androidx.annotation.Nullable;
 
 import com.example.basicbankingapp.R;
 import com.example.basicbankingapp.banking.Customer;
-import com.example.basicbankingapp.database.Customers;
+import com.example.basicbankingapp.banking.Transaction;
 
 import java.util.List;
 import java.util.Objects;
 
-public class CustomerAdapter extends ArrayAdapter<Customer> {
+public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
-    private List<Customer> customers;
+    private List<Transaction> transactions;
     private Context context;
     private int resource;
 
     static class ViewHolder{
-        TextView customerName;
-        TextView email;
-        TextView balance;
+        TextView sender;
+        TextView receiver;
+        TextView amount;
     }
 
     /**
@@ -37,22 +37,22 @@ public class CustomerAdapter extends ArrayAdapter<Customer> {
      *                 instantiating views.
      * @param objects  The objects to represent in the ListView.
      */
-    public CustomerAdapter(@NonNull Context context, int resource, @NonNull List<Customer> objects) {
+    public TransactionAdapter(@NonNull Context context, int resource, @NonNull List<Transaction> objects) {
         super(context, resource);
-        this.customers = objects;
+        this.transactions = objects;
         this.context = context;
         this.resource = resource;
     }
 
     @Override
     public int getCount() {
-        return customers.size();
+        return transactions.size();
     }
 
     @Nullable
     @Override
-    public Customer getItem(int position) {
-        return customers.get(position);
+    public Transaction getItem(int position) {
+        return transactions.get(position);
     }
 
     @NonNull
@@ -61,14 +61,14 @@ public class CustomerAdapter extends ArrayAdapter<Customer> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ViewHolder viewHolder = new ViewHolder();
         View row = inflater.inflate(resource,parent,false);;
-        viewHolder.customerName = (TextView) Objects.requireNonNull(row).findViewById(R.id.customerName);
-        viewHolder.email = (TextView) Objects.requireNonNull(row).findViewById(R.id.email);
-        viewHolder.balance = (TextView) Objects.requireNonNull(row).findViewById(R.id.balance);
+        viewHolder.sender = (TextView) Objects.requireNonNull(row).findViewById(R.id.senderName);
+        viewHolder.receiver = (TextView) Objects.requireNonNull(row).findViewById(R.id.receiverName);
+        viewHolder.amount = (TextView) Objects.requireNonNull(row).findViewById(R.id.transactionAmount);
 
         row.setTag(viewHolder);
-        viewHolder.customerName.setText(customers.get(position).getName());
-        viewHolder.email.setText(String.valueOf(customers.get(position).getEmail()));
-        viewHolder.balance.setText(String.format("₹%s", String.valueOf(customers.get(position).getBalance())));
+        viewHolder.sender.setText(String.valueOf(transactions.get(position).getSenderAcc()));
+        viewHolder.receiver.setText(String.valueOf(transactions.get(position).getReceiverAcc()));
+        viewHolder.amount.setText(String.format("₹%s", String.valueOf(transactions.get(position).getAmount())));
         return row;
     }
 
