@@ -2,6 +2,7 @@ package com.example.basicbankingapp.database;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.basicbankingapp.banking.Transaction;
@@ -14,18 +15,10 @@ public class Transactions extends Database{
 
     private static String dbName = "BANKING";
     private static int dbVersion = 1;
-    private static String tableName = "TRANSACTIONS";
-
-    private static String transactionId = "_transaction_ID";
-    private static String senderAcc = "sender_account_ID";
-    private static String receiverAcc = "receiver_account_ID";
-    private static String time = "time";
-    private static String amount = "transfer_amount";
-
-    private static String columnNameWithDataType = transactionId + " INTEGER primary key, " + senderAcc + " INTEGER, " + receiverAcc + " INTEGER, " + time + " INTEGER unique, " + amount + " REAL";
+    private static String tableName = TRANSACTION_TABLE;
 
     public Transactions(Context context) {
-        super(context, dbName, dbVersion, tableName, columnNameWithDataType);
+        super(context, dbName, dbVersion);
     }
 
     public boolean save(Transaction transaction){
@@ -33,7 +26,8 @@ public class Transactions extends Database{
         try{
             database = getWritableDatabase();
             Date dateTimeNow = new Date();
-            database.execSQL("insert into " + tableName + " ("+ transactionId + ", " + senderAcc + ", " + receiverAcc + ", " + dateTimeNow + ", " + amount + ") values(" + transaction.getTransactionId() + "," + transaction.getSenderAcc() + "," + transaction.getReceiverAcc() + "," + dateTimeNow.getTime() + "," + transaction.getAmount() + ")");
+            long timeInMilli = dateTimeNow.getTime();
+            database.execSQL("insert into " + tableName + " ("+ transactionId + ", " + senderAcc + ", " + receiverAcc + ", " + time + ", " + amount + ") values(" + transaction.getTransactionId() + "," + transaction.getSenderAcc() + "," + transaction.getReceiverAcc() + "," + timeInMilli + "," + transaction.getAmount() + ");");
             success = true;
         } catch (Exception e){
             e.printStackTrace();
@@ -42,19 +36,48 @@ public class Transactions extends Database{
     }
 
     public List<Transaction> allTransactions(){
-        try (Cursor cursor = database.rawQuery("select * from " + tableName + ";", null)) {
-            List<Transaction> transactionList = new ArrayList<>();
-            while (cursor.moveToNext()) {
-                transactionList.add(new Transaction(cursor.getLong(0),cursor.getLong(1),cursor.getLong(2),cursor.getLong(3),cursor.getDouble(4)));
-                Log.e("t", cursor.getLong(2) + "  " + cursor.getDouble(3) + "");
+        database = getReadableDatabase();
+        List<Transaction> transactionList = new ArrayList<>();
+        try {
+            try (Cursor cursor = database.rawQuery("select * from " + tableName + ";", null)) {
+                while (cursor.moveToNext()) {
+                    transactionList.add(new Transaction(cursor.getString(0), cursor.getLong(1), cursor.getLong(2), cursor.getLong(3), cursor.getDouble(4)));
+                    Log.e("t", cursor.getLong(2) + "  " + cursor.getDouble(3) + "");
+                }
             }
-            return transactionList;
+        } catch (Exception e){
+            e.printStackTrace();
         }
+        return transactionList;
     }
 
     public Transaction detailOfTransaction(long transactionID){
-        try(Cursor cursor = database.rawQuery("select * from " + tableName + " where " + Transactions.transactionId + " = " + transactionID + ";",null)){
-            return new Transaction(cursor.getLong(0),cursor.getLong(1),cursor.getLong(2),cursor.getLong(3),cursor.getDouble(4));
+        database = getReadableDatabase();
+        Transaction transaction = new Transaction();
+        try {
+            try (Cursor cursor = database.rawQuery("select * from " + tableName + " where " + Transactions.transactionId + " = " + transactionID + ";", null)) {
+                cursor.moveToFirst();
+                transaction = new Transaction(cursor.getString(0), cursor.getLong(1), cursor.getLong(2), cursor.getLong(3), cursor.getDouble(4));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+        return transaction;
+    }
+
+    public static long count(Context context) {
+        long count = 0;
+        try {
+            Transactions customers = new Transactions(context);
+            customers.getWritableDatabase();
+            SQLiteDatabase database = customers.getReadableDatabase();
+            try (Cursor cursor = database.rawQuery("select count(*) from " + tableName + ";", null)) {
+                cursor.moveToFirst();
+                count = cursor.getInt(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 }

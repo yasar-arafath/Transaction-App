@@ -1,14 +1,26 @@
 package com.example.basicbankingapp.banking;
 
+import android.content.Context;
+
+import com.example.basicbankingapp.database.Customers;
+
 public class Transaction {
 
-    private long transactionId;
+    private String transactionId;
     private long senderAcc;
     private long receiverAcc;
     private long time;
     private double amount;
 
-    public Transaction(long transactionId, long senderAcc, long receiverAcc, long time, double amount) {
+    public Transaction(){
+        transactionId = null;
+        senderAcc = 0;
+        receiverAcc = 0;
+        time = 0;
+        amount = 0.0;
+    }
+
+    public Transaction(String transactionId, long senderAcc, long receiverAcc, long time, double amount) {
         this.transactionId = transactionId;
         this.senderAcc = senderAcc;
         this.receiverAcc = receiverAcc;
@@ -16,7 +28,15 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public long getTransactionId() {
+    public Transaction(Transaction transaction,long time){
+        transactionId = null;
+        senderAcc = transaction.senderAcc;
+        receiverAcc = transaction.receiverAcc;
+        this.time = time;
+        amount = transaction.amount;
+    }
+
+    public String getTransactionId() {
         return transactionId;
     }
 
@@ -34,5 +54,12 @@ public class Transaction {
 
     public double getAmount() {
         return amount;
+    }
+
+    public void generateTransactionID(Context context){
+        Customers customers = new Customers(context);
+        String senderName = customers.detailOfCustomer(senderAcc).getName();
+        String receiverName = customers.detailOfCustomer(receiverAcc).getName();
+        transactionId = senderName.charAt(0) + receiverName.charAt(0) + String.valueOf(time);
     }
 }

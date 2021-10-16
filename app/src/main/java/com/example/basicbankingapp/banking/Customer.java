@@ -48,6 +48,16 @@ public class Customer {
         return 0;
     }
 
+    public Customer(){
+        this.accID = 0;
+        this.name = null;
+        this.dob = 0;
+        this.email = null;
+        this.mobNum = 0;
+        this.balance = 0.0;
+        this.address = null;
+    }
+
     public Customer(long accID, String name, long dob, String email, long mobNum, double balance, String address) {
         this.accID = accID;
         this.name = name;

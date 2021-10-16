@@ -7,6 +7,9 @@ import com.example.basicbankingapp.banking.Transaction;
 import com.example.basicbankingapp.database.Customers;
 import com.example.basicbankingapp.database.Transactions;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 public class MakeTransaction {
 
     private Transaction transaction;
@@ -14,20 +17,26 @@ public class MakeTransaction {
     private Customer sender;
     private Customer receiver;
     private Customers customersDB;
+    private Context context;
 
-    public MakeTransaction(Context context, Transaction transactDone, long senderID, long receiverID){
+    public MakeTransaction(Context context, Transaction transactDone){
+        this.context = context;
         transaction = transactDone;
         transactionsDB = new Transactions(context);
         customersDB = new Customers(context);
-        sender = customersDB.detailOfCustomer(senderID);
-        receiver = customersDB.detailOfCustomer(receiverID);
+        sender = customersDB.detailOfCustomer(transactDone.getSenderAcc());
+        receiver = customersDB.detailOfCustomer(transactDone.getReceiverAcc());
     }
 
     public void make(){
+        transaction = new Transaction(transaction,new Date().getTime());
+        transaction.generateTransactionID(context);
+        transactionsDB.save(transaction);
         try {
-            transactionsDB.save(transaction);
-            customersDB.updateBalance(sender.getAccID(),sender.getBalance()-transaction.getAmount());
-            customersDB.updateBalance(receiver.getAccID(),receiver.getBalance()+transaction.getAmount());
+            double senderNewBalance = sender.getBalance()-transaction.getAmount();
+            double receiverNewBalance = receiver.getBalance()+transaction.getAmount();
+            customersDB.updateBalance(sender.getAccID(),new BigDecimal(senderNewBalance).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+            customersDB.updateBalance(receiver.getAccID(),new BigDecimal(receiverNewBalance).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
         }catch (Exception e){
             e.printStackTrace();
         }

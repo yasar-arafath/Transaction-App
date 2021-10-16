@@ -1,27 +1,22 @@
 package com.example.basicbankingapp.ui;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
 import com.example.basicbankingapp.R;
+import com.example.basicbankingapp.banking.Transaction;
 import com.example.basicbankingapp.database.Customers;
 import com.example.basicbankingapp.databinding.ActivityMainBinding;
+import com.example.basicbankingapp.logic.MakeTransaction;
 import com.example.basicbankingapp.logic.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -71,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         handler.postDelayed(runnable,2000);
-
+        MakeTransaction makeTransaction = new MakeTransaction(this,new Transaction(null,1234567,2345678,0,1000.12));
+        makeTransaction.make();
     }
 
 }
