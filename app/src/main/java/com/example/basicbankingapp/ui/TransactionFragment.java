@@ -5,9 +5,11 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.basicbankingapp.R;
@@ -34,6 +36,7 @@ public class TransactionFragment extends Fragment {
 
     private Context context;
     private ListView listOfTransactions;
+    private Button sortButton;
 
     private String mParam1;
     private String mParam2;
@@ -90,6 +93,23 @@ public class TransactionFragment extends Fragment {
 
     private void initialise(){
         listOfTransactions = (ListView) this.requireView().findViewById(R.id.listOfTransactions);
+        sortButton = (Button) this.requireView().findViewById(R.id.sortButton);
+        sortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String order = v.getTag().toString();
+                if(order.equals(Transactions.ASCENDING)){
+                    sortButton.setText("OLDEST FIRST");
+                    v.setTag(Transactions.DESCENDING);
+                    Transactions.setORDER(Transactions.DESCENDING);
+                } else {
+                    sortButton.setText("LATEST FIRST");
+                    v.setTag(Transactions.ASCENDING);
+                    Transactions.setORDER(Transactions.ASCENDING);
+                }
+                updateTransactionList();
+            }
+        });
         updateTransactionList();
     }
 

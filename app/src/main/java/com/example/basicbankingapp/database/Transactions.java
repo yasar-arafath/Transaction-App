@@ -17,6 +17,14 @@ public class Transactions extends Database{
     private static int dbVersion = 1;
     private static String tableName = TRANSACTION_TABLE;
 
+    public static String ASCENDING = "ASC";
+    public static String DESCENDING = "DESC";
+    private static String ORDER = DESCENDING;
+
+    public static void setORDER(String ORDER) {
+        Transactions.ORDER = ORDER;
+    }
+
     public Transactions(Context context) {
         super(context, dbName, dbVersion);
     }
@@ -39,7 +47,7 @@ public class Transactions extends Database{
         database = getReadableDatabase();
         List<Transaction> transactionList = new ArrayList<>();
         try {
-            try (Cursor cursor = database.rawQuery("select * from " + tableName + ";", null)) {
+            try (Cursor cursor = database.rawQuery("select * from " + tableName + " ORDER BY " + time + " " + ORDER + ";", null)) {
                 while (cursor.moveToNext()) {
                     transactionList.add(new Transaction(cursor.getString(0), cursor.getLong(1), cursor.getLong(2), cursor.getLong(3), cursor.getDouble(4)));
                     Log.e("t", cursor.getLong(2) + "  " + cursor.getDouble(3) + "");
