@@ -17,6 +17,7 @@ import com.example.basicbankingapp.database.Customers;
 import com.example.basicbankingapp.database.Transactions;
 import com.example.basicbankingapp.logic.CustomerAdapter;
 import com.example.basicbankingapp.logic.TransactionAdapter;
+import com.example.basicbankingapp.logic.ViewPagerAdapter;
 
 import java.util.List;
 
@@ -27,7 +28,6 @@ import java.util.List;
  */
 public class TransactionFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -35,12 +35,11 @@ public class TransactionFragment extends Fragment {
     private Context context;
     private ListView listOfTransactions;
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public TransactionFragment(Context context) {
-        this.context = context;
+    public TransactionFragment() {
+        context = ViewPagerAdapter.getFragmentActivity().getApplicationContext();
     }
 
     /**
@@ -58,9 +57,8 @@ public class TransactionFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment TransactionFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static TransactionFragment newInstance(String param1, String param2, Context context) {
-        TransactionFragment fragment = new TransactionFragment(context);
+        TransactionFragment fragment = new TransactionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

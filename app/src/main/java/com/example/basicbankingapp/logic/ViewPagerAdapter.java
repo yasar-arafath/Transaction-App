@@ -18,14 +18,20 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     private List<Fragment> fragmentList;
     private Context context;
+    private static FragmentActivity fragmentActivity;
+
+    public static FragmentActivity getFragmentActivity() {
+        return fragmentActivity;
+    }
 
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, Context context) {
         super(fragmentActivity);
+        this.fragmentActivity = fragmentActivity;
         this.context = context;
         fragmentList = new ArrayList<Fragment>(){
             {
-                add(new CustomerFragment(context));
-                add(new TransactionFragment(context));
+                add(new CustomerFragment());
+                add(new TransactionFragment());
             }
         };
     }
