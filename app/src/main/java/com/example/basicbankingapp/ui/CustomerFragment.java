@@ -1,6 +1,7 @@
 package com.example.basicbankingapp.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -9,10 +10,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.example.basicbankingapp.CustomerInfoActivity;
 import com.example.basicbankingapp.R;
 import com.example.basicbankingapp.banking.Customer;
 import com.example.basicbankingapp.database.Customers;
@@ -84,6 +87,13 @@ public class CustomerFragment extends Fragment {
 
     private void initialise(){
         listOfCustomers = (ListView) this.requireView().findViewById(R.id.listOfCustomers);
+        listOfCustomers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent customerInfo = new Intent(context, CustomerInfoActivity.class);
+                startActivity(customerInfo);
+            }
+        });
         updateCustomerList();
     }
 
