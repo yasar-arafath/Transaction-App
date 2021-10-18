@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.basicbankingapp.R;
 import com.example.basicbankingapp.banking.Customer;
 import com.example.basicbankingapp.database.Customers;
 import com.example.basicbankingapp.databinding.ActivityCustomerInfoBinding;
@@ -75,7 +74,7 @@ public class CustomerInfoActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
         accNum.setText(String.valueOf(customer.getAccID()));
-        balance.setText(String.valueOf(customer.getBalance()));
+        balance.setText("₹" + String.valueOf(customer.getBalance()));
         customerName.setText(customer.getName());
         email.setText(customer.getEmail());
         mobNum.setText(String.valueOf(customer.getMobNum()));

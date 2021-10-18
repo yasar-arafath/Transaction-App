@@ -3,7 +3,6 @@ package com.example.basicbankingapp.database;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.example.basicbankingapp.banking.Transaction;
 
@@ -35,7 +34,7 @@ public class Transactions extends Database{
             database = getWritableDatabase();
             Date dateTimeNow = new Date();
             long timeInMilli = dateTimeNow.getTime();
-            database.execSQL("insert into " + tableName + " ("+ transactionId + ", " + senderAcc + ", " + receiverAcc + ", " + time + ", " + amount + ") values(" + transaction.getTransactionId() + "," + transaction.getSenderAcc() + "," + transaction.getReceiverAcc() + "," + timeInMilli + "," + transaction.getAmount() + ");");
+            database.execSQL("insert into " + tableName + " ("+ transactionId + ", " + senderAcc + ", " + receiverAcc + ", " + time + ", " + amount + ") values('" + transaction.getTransactionId() + "'," + transaction.getSenderAcc() + "," + transaction.getReceiverAcc() + "," + timeInMilli + "," + transaction.getAmount() + ");");
             success = true;
         } catch (Exception e){
             e.printStackTrace();
@@ -50,7 +49,6 @@ public class Transactions extends Database{
             try (Cursor cursor = database.rawQuery("select * from " + tableName + " ORDER BY " + time + " " + ORDER + ";", null)) {
                 while (cursor.moveToNext()) {
                     transactionList.add(new Transaction(cursor.getString(0), cursor.getLong(1), cursor.getLong(2), cursor.getLong(3), cursor.getDouble(4)));
-                    Log.e("t", cursor.getLong(2) + "  " + cursor.getDouble(3) + "");
                 }
             }
         } catch (Exception e){
@@ -59,11 +57,11 @@ public class Transactions extends Database{
         return transactionList;
     }
 
-    public Transaction detailOfTransaction(long transactionID){
+    public Transaction detailOfTransaction(String transactionID){
         database = getReadableDatabase();
         Transaction transaction = new Transaction();
         try {
-            try (Cursor cursor = database.rawQuery("select * from " + tableName + " where " + Transactions.transactionId + " = " + transactionID + ";", null)) {
+            try (Cursor cursor = database.rawQuery("select * from " + tableName + " where " + Transactions.transactionId + " = '" + transactionID + "';", null)) {
                 cursor.moveToFirst();
                 transaction = new Transaction(cursor.getString(0), cursor.getLong(1), cursor.getLong(2), cursor.getLong(3), cursor.getDouble(4));
             }

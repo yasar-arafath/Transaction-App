@@ -1,10 +1,12 @@
 package com.example.basicbankingapp.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -32,6 +34,7 @@ public class TransactionFragment extends Fragment {
     private Context context;
     private ListView listOfTransactions;
     private Button sortButton;
+    public static final String GET_TRANSACTION_ID = "TRANSACTION_ID";
 
     private String mParam1;
     private String mParam2;
@@ -89,6 +92,15 @@ public class TransactionFragment extends Fragment {
     private void initialise(){
         listOfTransactions = (ListView) this.requireView().findViewById(R.id.listOfTransactions);
         sortButton = (Button) this.requireView().findViewById(R.id.sortButton);
+        listOfTransactions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TransactionAdapter.ViewHolder viewHolder = (TransactionAdapter.ViewHolder) view.getTag();
+                Intent transactionInfo = new Intent(context,TransactionInfoActivity.class);
+                transactionInfo.putExtra(GET_TRANSACTION_ID,viewHolder.getTransactionId());
+                startActivity(transactionInfo);
+            }
+        });
         sortButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
