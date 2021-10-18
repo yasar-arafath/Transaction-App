@@ -1,13 +1,13 @@
 package com.example.basicbankingapp.ui;
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager2.widget.ViewPager2;
-
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
 
 import com.example.basicbankingapp.R;
 import com.example.basicbankingapp.banking.Transaction;

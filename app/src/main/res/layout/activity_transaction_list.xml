@@ -8,22 +8,20 @@
     tools:context=".ui.TransactionList">
 
     <TextView
-        android:id="@+id/senderName"
+        android:id="@+id/senderID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:text="Sender"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/receiverName"
+        android:id="@+id/receiverID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -31,21 +29,21 @@
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/senderName"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/senderName" />
+        app:layout_constraintBottom_toBottomOf="@+id/senderID"
+        app:layout_constraintStart_toEndOf="@+id/arrow"
+        app:layout_constraintTop_toTopOf="@+id/senderID" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:text="➠"
         android:textColor="@color/white"
         android:textSize="34sp"
-        app:layout_constraintBottom_toBottomOf="@+id/senderName"
-        app:layout_constraintStart_toEndOf="@+id/senderName"
-        app:layout_constraintTop_toTopOf="@+id/senderName" />
+        app:layout_constraintBottom_toBottomOf="@+id/senderID"
+        app:layout_constraintStart_toEndOf="@+id/senderID"
+        app:layout_constraintTop_toTopOf="@+id/senderID" />
 
     <TextView
         android:id="@+id/transactionAmount"
@@ -56,7 +54,30 @@
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/receiverName"
+        app:layout_constraintBottom_toBottomOf="@+id/receiverID"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/receiverName" />
+        app:layout_constraintTop_toTopOf="@+id/receiverID" />
+
+    <TextView
+        android:id="@+id/senderName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:text="TextView"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/senderID"
+        app:layout_constraintStart_toStartOf="@+id/senderID"
+        app:layout_constraintTop_toBottomOf="@+id/senderID" />
+
+    <TextView
+        android:id="@+id/receiverName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/receiverID"
+        app:layout_constraintStart_toStartOf="@+id/receiverID"
+        app:layout_constraintTop_toTopOf="@+id/senderName" />
 </androidx.constraintlayout.widget.ConstraintLayout>

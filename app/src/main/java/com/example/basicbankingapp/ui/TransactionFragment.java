@@ -2,22 +2,17 @@ package com.example.basicbankingapp.ui;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.basicbankingapp.R;
-import com.example.basicbankingapp.banking.Customer;
 import com.example.basicbankingapp.banking.Transaction;
-import com.example.basicbankingapp.database.Customers;
 import com.example.basicbankingapp.database.Transactions;
-import com.example.basicbankingapp.logic.CustomerAdapter;
 import com.example.basicbankingapp.logic.TransactionAdapter;
 import com.example.basicbankingapp.logic.ViewPagerAdapter;
 

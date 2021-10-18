@@ -1,8 +1,8 @@
 package com.example.basicbankingapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class CustomerInfoActivity extends AppCompatActivity {
 

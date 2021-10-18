@@ -12,21 +12,25 @@ import androidx.annotation.Nullable;
 
 import com.example.basicbankingapp.R;
 import com.example.basicbankingapp.banking.Customer;
-import com.example.basicbankingapp.database.Customers;
 
 import java.util.List;
 import java.util.Objects;
 
 public class CustomerAdapter extends ArrayAdapter<Customer> {
 
-    private List<Customer> customers;
-    private Context context;
-    private int resource;
+    private final List<Customer> customers;
+    private final Context context;
+    private final int resource;
 
-    static class ViewHolder{
+    public static class ViewHolder{
         TextView customerName;
         TextView email;
         TextView balance;
+        long customerId;
+
+        public long getCustomerId() {
+            return customerId;
+        }
     }
 
     /**
@@ -60,15 +64,16 @@ public class CustomerAdapter extends ArrayAdapter<Customer> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ViewHolder viewHolder = new ViewHolder();
-        View row = inflater.inflate(resource,parent,false);;
-        viewHolder.customerName = (TextView) Objects.requireNonNull(row).findViewById(R.id.customerName);
-        viewHolder.email = (TextView) Objects.requireNonNull(row).findViewById(R.id.email);
-        viewHolder.balance = (TextView) Objects.requireNonNull(row).findViewById(R.id.balance);
+        View row = inflater.inflate(resource,parent,false);
+        viewHolder.customerId = customers.get(position).getAccID();
+        viewHolder.customerName = Objects.requireNonNull(row).findViewById(R.id.customerName);
+        viewHolder.email = Objects.requireNonNull(row).findViewById(R.id.email);
+        viewHolder.balance = Objects.requireNonNull(row).findViewById(R.id.balance);
 
         row.setTag(viewHolder);
         viewHolder.customerName.setText(customers.get(position).getName());
         viewHolder.email.setText(String.valueOf(customers.get(position).getEmail()));
-        viewHolder.balance.setText(String.format("₹%s", String.valueOf(customers.get(position).getBalance())));
+        viewHolder.balance.setText(String.format("₹%s", customers.get(position).getBalance()));
         return row;
     }
 

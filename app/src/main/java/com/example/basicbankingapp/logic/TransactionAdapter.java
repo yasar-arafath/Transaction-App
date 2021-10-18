@@ -11,22 +11,29 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.basicbankingapp.R;
-import com.example.basicbankingapp.banking.Customer;
 import com.example.basicbankingapp.banking.Transaction;
+import com.example.basicbankingapp.database.Customers;
 
 import java.util.List;
 import java.util.Objects;
 
 public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
-    private List<Transaction> transactions;
-    private Context context;
-    private int resource;
+    private final List<Transaction> transactions;
+    private final Context context;
+    private final int resource;
 
-    static class ViewHolder{
-        TextView sender;
-        TextView receiver;
+    public static class ViewHolder{
+        TextView senderId;
+        TextView receiverId;
         TextView amount;
+        TextView senderName;
+        TextView receiverName;
+        String transactionId;
+
+        public String getTransactionId() {
+            return transactionId;
+        }
     }
 
     /**
@@ -60,15 +67,21 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ViewHolder viewHolder = new ViewHolder();
-        View row = inflater.inflate(resource,parent,false);;
-        viewHolder.sender = (TextView) Objects.requireNonNull(row).findViewById(R.id.senderName);
-        viewHolder.receiver = (TextView) Objects.requireNonNull(row).findViewById(R.id.receiverName);
-        viewHolder.amount = (TextView) Objects.requireNonNull(row).findViewById(R.id.transactionAmount);
+        View row = inflater.inflate(resource,parent,false);
+        viewHolder.transactionId = transactions.get(position).getTransactionId();
+        viewHolder.senderId = Objects.requireNonNull(row).findViewById(R.id.senderID);
+        viewHolder.receiverId = Objects.requireNonNull(row).findViewById(R.id.receiverID);
+        viewHolder.amount = Objects.requireNonNull(row).findViewById(R.id.transactionAmount);
+        viewHolder.senderName = Objects.requireNonNull(row).findViewById(R.id.senderName);
+        viewHolder.receiverName = Objects.requireNonNull(row).findViewById(R.id.receiverName);
 
         row.setTag(viewHolder);
-        viewHolder.sender.setText(String.valueOf(transactions.get(position).getSenderAcc()));
-        viewHolder.receiver.setText(String.valueOf(transactions.get(position).getReceiverAcc()));
-        viewHolder.amount.setText(String.format("₹%s", String.valueOf(transactions.get(position).getAmount())));
+        viewHolder.senderId.setText(String.valueOf(transactions.get(position).getSenderAcc()));
+        viewHolder.receiverId.setText(String.valueOf(transactions.get(position).getReceiverAcc()));
+        viewHolder.amount.setText(String.format("₹%s", transactions.get(position).getAmount()));
+        Customers customers = new Customers(context);
+        viewHolder.senderName.setText(customers.detailOfCustomer(transactions.get(position).getSenderAcc()).getName());
+        viewHolder.receiverName.setText(customers.detailOfCustomer(transactions.get(position).getReceiverAcc()).getName());
         return row;
     }
 

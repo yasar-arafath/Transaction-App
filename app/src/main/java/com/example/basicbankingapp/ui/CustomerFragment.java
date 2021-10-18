@@ -3,17 +3,13 @@ package com.example.basicbankingapp.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.basicbankingapp.CustomerInfoActivity;
 import com.example.basicbankingapp.R;
@@ -22,7 +18,6 @@ import com.example.basicbankingapp.database.Customers;
 import com.example.basicbankingapp.logic.CustomerAdapter;
 import com.example.basicbankingapp.logic.ViewPagerAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
