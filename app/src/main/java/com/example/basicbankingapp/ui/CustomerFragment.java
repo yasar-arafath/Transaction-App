@@ -11,7 +11,6 @@ import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.basicbankingapp.CustomerInfoActivity;
 import com.example.basicbankingapp.R;
 import com.example.basicbankingapp.banking.Customer;
 import com.example.basicbankingapp.database.Customers;
@@ -33,6 +32,7 @@ public class CustomerFragment extends Fragment {
 
     private Context context;
     private ListView listOfCustomers;
+    public static final String GET_CUSTOMER_ID = "CUSTOMER_ID";
 
     private String mParam1;
     private String mParam2;
@@ -82,12 +82,11 @@ public class CustomerFragment extends Fragment {
 
     private void initialise(){
         listOfCustomers = (ListView) this.requireView().findViewById(R.id.listOfCustomers);
-        listOfCustomers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent customerInfo = new Intent(context, CustomerInfoActivity.class);
-                startActivity(customerInfo);
-            }
+        listOfCustomers.setOnItemClickListener((parent, view, position, id) -> {
+            CustomerAdapter.ViewHolder viewHolder = (CustomerAdapter.ViewHolder) view.getTag();
+            Intent customerInfo = new Intent(context, CustomerInfoActivity.class);
+            customerInfo.putExtra(GET_CUSTOMER_ID,viewHolder.getCustomerId());
+            startActivity(customerInfo);
         });
         updateCustomerList();
     }

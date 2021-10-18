@@ -38,7 +38,7 @@ public class Customer {
 
     @SuppressLint("SimpleDateFormat")
     private static long getDate(String source) {
-        String pattern = "dd-mm-yyyy";
+        String pattern = "dd-MM-yyyy";
         SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
         try {
             return (Objects.requireNonNull(dateFormat.parse(source)).getTime());

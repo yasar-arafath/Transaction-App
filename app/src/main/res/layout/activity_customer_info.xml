@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_customer_info"
-    tools:context=".CustomerInfoActivity">
+    tools:context=".ui.CustomerInfoActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
@@ -25,23 +25,27 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/dobInfo"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
                     android:text="28/11/2001"
+                    android:textAlignment="viewEnd"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="@+id/mobNumInfo"
+                    app:layout_constraintStart_toEndOf="@+id/dobText"
                     app:layout_constraintTop_toTopOf="@+id/dobText" />
 
                 <TextView
                     android:id="@+id/balanceInfo"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     android:text="BALANCE"
@@ -53,7 +57,7 @@
 
                 <TextView
                     android:id="@+id/accNumInfo"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="30dp"
@@ -77,12 +81,15 @@
 
                 <TextView
                     android:id="@+id/customerNameInfo"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
                     android:text="AKIRA"
+                    android:textAlignment="viewEnd"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="@+id/balanceInfo"
+                    app:layout_constraintStart_toEndOf="@+id/customerNameText"
                     app:layout_constraintTop_toTopOf="@+id/customerNameText" />
 
                 <TextView
@@ -109,24 +116,28 @@
 
                 <Spinner
                     android:id="@+id/dropDownList"
-                    android:layout_width="130dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="45dp"
                     android:minHeight="48dp"
                     app:layout_constraintEnd_toEndOf="@+id/addressInfo"
+                    app:layout_constraintStart_toEndOf="@+id/transactToText"
                     app:layout_constraintTop_toBottomOf="@+id/addressInfo"
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <EditText
                     android:id="@+id/enterAmount"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="20dp"
                     android:ems="8"
                     android:inputType="numberDecimal"
                     android:minHeight="48dp"
                     android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="@+id/dropDownList"
+                    app:layout_constraintStart_toEndOf="@+id/amountText"
                     app:layout_constraintTop_toBottomOf="@+id/dropDownList"
                     tools:ignore="SpeakableTextPresentCheck" />
 
@@ -162,16 +173,19 @@
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="@+id/customerNameText"
-                    app:layout_constraintTop_toBottomOf="@+id/customerNameText" />
+                    app:layout_constraintTop_toBottomOf="@+id/customerNameInfo" />
 
                 <TextView
                     android:id="@+id/emailInfo"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
                     android:text="akiraofficial@gmail.com"
+                    android:textAlignment="viewEnd"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="@+id/customerNameInfo"
+                    app:layout_constraintStart_toEndOf="@+id/emailText"
                     app:layout_constraintTop_toTopOf="@+id/emailText" />
 
                 <TextView
@@ -183,7 +197,7 @@
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="@+id/emailText"
-                    app:layout_constraintTop_toBottomOf="@+id/emailText" />
+                    app:layout_constraintTop_toBottomOf="@+id/emailInfo" />
 
                 <TextView
                     android:id="@+id/dobText"
@@ -194,16 +208,19 @@
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="@+id/mobNumText"
-                    app:layout_constraintTop_toBottomOf="@+id/mobNumText" />
+                    app:layout_constraintTop_toBottomOf="@+id/mobNumInfo" />
 
                 <TextView
                     android:id="@+id/mobNumInfo"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
                     android:text="9829347"
+                    android:textAlignment="viewEnd"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="@+id/emailInfo"
+                    app:layout_constraintStart_toEndOf="@+id/mobNumText"
                     app:layout_constraintTop_toTopOf="@+id/mobNumText" />
 
                 <TextView
@@ -215,16 +232,19 @@
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="@+id/dobText"
-                    app:layout_constraintTop_toBottomOf="@+id/dobText" />
+                    app:layout_constraintTop_toBottomOf="@+id/dobInfo" />
 
                 <TextView
                     android:id="@+id/addressInfo"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
                     android:text="Bhubaneswar, Odisha"
+                    android:textAlignment="viewEnd"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="@+id/dobInfo"
+                    app:layout_constraintStart_toEndOf="@+id/addressText"
                     app:layout_constraintTop_toTopOf="@+id/addressText" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
