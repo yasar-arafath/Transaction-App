@@ -1,6 +1,7 @@
 package com.example.basicbankingapp.banking;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.basicbankingapp.database.Customers;
 
@@ -60,6 +61,6 @@ public class Transaction {
         Customers customers = new Customers(context);
         String senderName = customers.detailOfCustomer(senderAcc).getName();
         String receiverName = customers.detailOfCustomer(receiverAcc).getName();
-        transactionId = senderName.charAt(0) + receiverName.charAt(0) + String.valueOf(time);
+        transactionId = senderName.charAt(0) + "" + receiverName.charAt(0) + time;
     }
 }

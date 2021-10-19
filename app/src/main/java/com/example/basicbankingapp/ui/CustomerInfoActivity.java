@@ -16,17 +16,21 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.basicbankingapp.banking.Customer;
+import com.example.basicbankingapp.banking.Transaction;
 import com.example.basicbankingapp.database.Customers;
 import com.example.basicbankingapp.databinding.ActivityCustomerInfoBinding;
+import com.example.basicbankingapp.logic.MakeTransaction;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class CustomerInfoActivity extends AppCompatActivity {
 
     private ActivityCustomerInfoBinding infoBinding;
     private Customer customer;
+    private Customer receiver;
     private TextView accNum;
     private TextView balance;
     private TextView customerName;
@@ -39,6 +43,8 @@ public class CustomerInfoActivity extends AppCompatActivity {
     private Button transactButton;
     private Button cancelButton;
     private ArrayList<String> arrayList;
+    private List<Long> receiverIdList;
+    private double transferAmount;
 
 
     @Override
@@ -63,6 +69,8 @@ public class CustomerInfoActivity extends AppCompatActivity {
         enterAmount = infoBinding.enterAmount;
         transactButton = infoBinding.transactButton;
         cancelButton = infoBinding.cancelButton;
+
+        receiverIdList = new ArrayList<>();
 
         Intent intent = getIntent();
         long customerID = intent.getLongExtra(CustomerFragment.GET_CUSTOMER_ID,-1);
@@ -98,6 +106,7 @@ public class CustomerInfoActivity extends AppCompatActivity {
                     int pos = enterAmount.getText().length();
                     enterAmount.setSelection(pos);
                 }
+                transferAmount = Double.parseDouble(str2);
             }
         });
 
@@ -106,6 +115,7 @@ public class CustomerInfoActivity extends AppCompatActivity {
         for(Customer customer: Customer.getDefaultCustomerList()){
             if(customerID!=customer.getAccID()) {
                 arrayList.add(customer.getName());
+                receiverIdList.add(customer.getAccID());
             }
         }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, arrayList);
@@ -121,8 +131,9 @@ public class CustomerInfoActivity extends AppCompatActivity {
                 } else {
                     spinner.setAlpha(1);
                     enterAmount.setEnabled(true);
-                    String tutorialsName = parent.getItemAtPosition(position).toString();
-                    Toast.makeText(parent.getContext(), "Selected: " + tutorialsName, Toast.LENGTH_LONG).show();
+                    Customers customers = new Customers(getApplicationContext());
+                    receiver = customers.detailOfCustomer(receiverIdList.get(position-1));
+                    Toast.makeText(parent.getContext(), "Selected: " + receiver.getName(), Toast.LENGTH_LONG).show();
                 }
             }
             @Override
@@ -135,7 +146,15 @@ public class CustomerInfoActivity extends AppCompatActivity {
         transactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                MakeTransaction makeTransaction = new MakeTransaction(getApplicationContext(),new Transaction(null,customerID,receiver.getAccID(),0,transferAmount));
+                Intent transactResult = new Intent(getApplicationContext(), TransactionResult.class);
+                if(makeTransaction.make()){
+                    transactResult.putExtra(TransactionResult.EXTRA,TransactionResult.SUCCESS);
+                }else {
+                    transactResult.putExtra(TransactionResult.EXTRA,TransactionResult.FAILURE);
+                }
+                startActivity(transactResult);
+                finish();
             }
         });
     }

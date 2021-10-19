@@ -28,18 +28,23 @@ public class MakeTransaction {
         receiver = customersDB.detailOfCustomer(transactDone.getReceiverAcc());
     }
 
-    public void make(){
-        transaction = new Transaction(transaction,new Date().getTime());
-        transaction.generateTransactionID(context);
-        transactionsDB.save(transaction);
-        try {
-            double senderNewBalance = sender.getBalance()-transaction.getAmount();
-            double receiverNewBalance = receiver.getBalance()+transaction.getAmount();
-            customersDB.updateBalance(sender.getAccID(),new BigDecimal(senderNewBalance).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-            customersDB.updateBalance(receiver.getAccID(),new BigDecimal(receiverNewBalance).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-        }catch (Exception e){
-            e.printStackTrace();
+    public boolean make(){
+        boolean success=false;
+        if(sender.getBalance()>=transaction.getAmount()){
+            try {
+                transaction = new Transaction(transaction,new Date().getTime());
+                transaction.generateTransactionID(context);
+                transactionsDB.save(transaction);
+                double senderNewBalance = sender.getBalance()-transaction.getAmount();
+                double receiverNewBalance = receiver.getBalance()+transaction.getAmount();
+                customersDB.updateBalance(sender.getAccID(),new BigDecimal(senderNewBalance).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+                customersDB.updateBalance(receiver.getAccID(),new BigDecimal(receiverNewBalance).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+                success = true;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
+        return success;
     }
 
 }

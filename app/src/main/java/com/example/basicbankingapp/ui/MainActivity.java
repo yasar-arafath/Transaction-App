@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         handler.postDelayed(runnable,2000);
-        MakeTransaction makeTransaction = new MakeTransaction(this,new Transaction(null,1234567,2345678,0,1000.12));
-        makeTransaction.make();
     }
 
 }
